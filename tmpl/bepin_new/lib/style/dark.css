@@ -1,0 +1,53 @@
+.dark {
+    & header {
+        @apply bg-gray-900 border-gray-600 p-1;
+    }
+    
+    & section.breadcrumb {
+        @apply bg-gray-800 border-gray-900 text-gray-300;
+    }
+
+    & aside.toc {
+        @apply text-gray-100;
+        & span, & a {
+            &.active {
+                @apply text-yellow-100;
+            }
+            
+            &:hover {
+                @apply bg-gray-800;
+            }
+        }
+    }
+
+    & section.breadcrumb a {
+        @apply text-white;
+
+        &:hover {
+            @apply text-yellow-50;
+        }
+    }
+
+    & div.nav > .nav-item > a {
+        @apply text-white;
+        &:hover {
+            @apply text-yellow-100;
+        }
+    }
+
+    & a#theme-switch {
+        @apply text-white;
+    }
+
+    & aside.affix {
+        @apply text-white;
+
+        & > div {
+            @apply border-yellow-200;
+        }
+
+        & h1 {
+            @apply text-gray-300;
+        }
+    }
+}

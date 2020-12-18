@@ -1,0 +1,47 @@
+{
+  "name": "bepin_new",
+  "version": "1.0.0",
+  "description": "Bepin template for DocFX",
+  "main": "",
+  "watch": {
+    "build_style": {
+      "patterns": [
+        "./bepin_new/lib/style"
+      ],
+      "extensions": "css",
+      "quiet": false
+    },
+    "build_script": {
+      "patterns": [
+        "./bepin_new/lib/script"
+      ],
+      "extensions": "ts",
+      "quiet": false
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build_style": "postcss ./bepin_new/lib/style/main.css -o ./bepin_new/static/styles/template.css",
+    "build_prod": "cross-env NODE_ENV=production postcss ./bepin_new/lib/style/main.css -o ./bepin_new/static/styles/template.css && tsc --build tsconfig.json && cleancss -o ./bepin_new/static/styles/template.css ./bepin_new/static/styles/template.css && uglifyjs ./bepin_new/static/scripts/template.js --compress --mangle -o ./bepin_new/static/scripts/template.js",
+    "watch": "npm-watch",
+    "build_script": "tsc --build tsconfig.json"
+  },
+  "author": "horse",
+  "license": "MIT",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "npm-watch": "^0.7.0"
+  },
+  "dependencies": {
+    "@tailwindcss/typography": "^0.3.1",
+    "autoprefixer": "^10.1.0",
+    "clean-css-cli": "^4.3.0",
+    "postcss": "^8.2.1",
+    "postcss-cli": "^8.3.1",
+    "postcss-import": "^13.0.0",
+    "postcss-preset-env": "^6.7.0",
+    "tailwindcss": "^2.0.2",
+    "typescript": "^4.1.3",
+    "uglify-es": "^3.3.9"
+  }
+}

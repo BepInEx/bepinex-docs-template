@@ -1,0 +1,14 @@
+{
+    "spellright.language": [
+        "fi"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex"
+    ],
+    "files.associations": {
+        "*.tmpl": "mustache",
+        "*.tmpl.partial": "mustache"
+    },
+    "css.validate": false
+}

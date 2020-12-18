@@ -1,0 +1,193 @@
+
+body {
+    @apply grid min-h-screen dark:bg-gray-700 font-normal;
+    font-family: 'Roboto', sans-serif;
+    grid-template-rows: auto auto auto 1fr auto;
+    grid-template-columns: max-content auto 1fr;
+    grid-template-areas:
+                    "header header header"
+                    "breadcrumb breadcrumb breadcrumb"
+                    "toc affix ."
+                    "toc main main"
+                    "footer footer footer";
+}
+
+header {
+    @apply bg-gray-50 border-b-2 border-gray-200 p-1;
+    grid-area: header;
+}
+
+section.breadcrumb {
+    @apply bg-gray-100 border-gray-200 border-b-2 text-xs font-light py-2 px-4 text-black;
+    grid-area: breadcrumb;
+
+    & > span:not(:last-child)::after {
+        @apply text-gray-400;
+        content: '/';
+    }
+
+    & a {
+        @apply text-yellow-900;
+        &:hover {
+            @apply text-yellow-600;
+        }
+    }
+}
+
+nav {
+    @apply flex flex-row items-center;
+
+    & > div.nav {
+        @apply ml-10 flex flex-row;
+    
+        & > .nav-item {
+            @apply mx-3;
+    
+            & > a {
+                @apply font-light text-yellow-900;
+    
+                &:hover {
+                    @apply text-yellow-700;
+                }
+            }
+        }
+    }
+}
+
+.navbar-brand > img {
+    @apply h-24 mx-2;
+}
+
+a#theme-switch {
+    @apply text-3xl ml-auto cursor-pointer text-black;
+}
+
+main {
+    @apply prose dark:prose-dark p-5 max-w-5xl;
+    grid-area: main;
+}
+
+footer {
+    grid-area: footer;
+}
+
+aside.toc {
+    @apply px-5 font-light text-gray-900;
+    grid-area: toc;
+    min-width: 15rem;
+
+    & > div {
+        @apply sticky overflow-y-auto py-3 top-0 max-h-screen;
+    }
+
+    & span {
+        @apply cursor-pointer;
+    }
+
+    & ul ul {
+        @apply ml-4 text-sm;
+    }
+
+    & ul ul ul {
+        @apply ml-3 text-xs;
+    }
+
+    & summary {
+        @apply flex items-center;
+        list-style: none;
+
+        &::-webkit-details-marker {
+            display: none;
+        }
+
+        & > * {
+            @apply flex-grow;
+        }
+    }
+
+    & details summary::before {
+        content: '\f105';
+    }
+
+    & details[open] summary::before {
+        content: '\f107';
+    }
+
+    & details:focus,
+    & summary:focus {
+        @apply outline-none;
+    }
+
+    & span, & a {
+        @apply block py-1 px-2;
+
+        &.active {
+            @apply font-normal text-yellow-900;
+        }
+
+        &:hover {
+            @apply bg-gray-100;
+        }
+    }
+}
+
+aside.affix {
+    @apply text-sm px-5 pt-5;
+    grid-area: affix;
+
+    & > div {
+        @apply border-l-4 border-yellow-800 border-solid px-2;
+    }
+
+    & h1 {
+        @apply my-2 font-bold text-gray-600;
+    }
+
+    & ul ul {
+        @apply pl-2;
+    }
+
+    & a.active {
+        @apply font-bold;
+    }
+
+    & summary {
+        @apply flex items-center;
+        list-style: none;
+
+        &::-webkit-details-marker {
+            display: none;
+        }
+    }
+
+    & details summary::after {
+        content: '\f107';
+    }
+
+    & details[open] summary::after {
+        content: '\f106';
+    }
+
+    & details:focus,
+    & summary:focus {
+        @apply outline-none;
+    }
+}
+
+@screen xl {
+    body {
+        grid-template-areas:
+                        "header header header"
+                        "breadcrumb breadcrumb breadcrumb"
+                        "breadcrumb breadcrumb breadcrumb"
+                        "toc main affix"
+                        "footer footer footer";
+    }
+
+    aside.affix {
+        @apply py-5;
+        & > div {
+            @apply sticky top-3;
+        }
+    }
+}

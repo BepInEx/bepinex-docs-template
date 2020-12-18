@@ -1,0 +1,32 @@
+{{!include(/^static/.*/)}}
+{{!include(/^fonts/.*/)}}
+{{!include(favicon.ico)}}
+{{!include(logo.svg)}}
+{{!include(search-stopwords.json)}}
+<!DOCTYPE html>
+<html lang="en">
+{{> partials/head}}
+<body>
+    <header>
+        {{^_disableNavbar}}
+        {{> partials/navbar}}
+        {{/_disableNavbar}}
+    </header>
+    {{^_disableBreadcrumb}}
+    {{> partials/breadcrumb}}
+    {{/_disableBreadcrumb}}
+    {{^_disableToc}}
+    {{> partials/toc}}
+    {{/_disableToc}}
+    <main>
+        {{!body}}
+    </main>
+    {{^_disableAffix}}
+    {{> partials/affix}}
+    {{/_disableAffix}}
+    {{^_disableFooter}}
+    <footer></footer>
+    {{/_disableFooter}}
+{{> partials/scripts}}
+</body>
+</html>

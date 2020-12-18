@@ -1,0 +1,9 @@
+<nav>
+    <a class="navbar-brand" href="{{_rel}}index.html">
+        <img id="logo" class="svg" src="{{_rel}}{{{_appLogoPath}}}{{^_appLogoPath}}logo.svg{{/_appLogoPath}}" alt="{{_appName}}" >
+    </a>
+    {{#_nav}}
+    {{> partials/navbar-items}}
+    {{/_nav}}
+    <a id="theme-switch" class="icon-lightbulb"></a>
+</nav>

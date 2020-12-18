@@ -1,0 +1,9 @@
+{{#_toc}}
+{{^leaf}}
+<aside class="toc">
+<div>
+{{> partials/toc-items}}
+</div>
+</aside>
+{{/leaf}}
+{{/_toc}}
