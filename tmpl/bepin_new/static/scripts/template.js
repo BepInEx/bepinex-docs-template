@@ -166,9 +166,17 @@ function initAffix() {
                 a(tocItem);
             }
         };
-        applyCurrent(n => n.removeAttribute("open"), n => n.classList.remove("active"));
+        const applyOnFirstList = (n, apply) => {
+            if (n instanceof HTMLLIElement) {
+                apply(n);
+            }
+            else if (n.parentElement) {
+                applyOnFirstList(n.parentElement, apply);
+            }
+        };
+        applyCurrent(n => n.removeAttribute("open"), n => applyOnFirstList(n, p => p.classList.remove("active")));
         currentSelectedItem = current;
-        applyCurrent(n => n.setAttribute("open", "open"), n => n.classList.add("active"));
+        applyCurrent(n => n.setAttribute("open", "open"), n => applyOnFirstList(n, p => p.classList.add("active")));
     };
     selectCurrentAffixTocItem();
     document.addEventListener("scroll", selectCurrentAffixTocItem);

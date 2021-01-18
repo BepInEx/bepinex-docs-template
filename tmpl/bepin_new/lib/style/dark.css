@@ -13,7 +13,9 @@
             &.active {
                 @apply text-yellow-100;
             }
-            
+        }
+
+        & span, & a, & summary {
             &:hover {
                 @apply bg-gray-800;
             }

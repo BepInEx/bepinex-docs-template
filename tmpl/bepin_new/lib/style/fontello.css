@@ -28,8 +28,8 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-aside.toc summary::before,
-aside.affix summary::after {
+aside.toc summary::after,
+aside.affix summary::before {
     cursor: pointer;
     font-family: "fontello";
     font-style: normal;
