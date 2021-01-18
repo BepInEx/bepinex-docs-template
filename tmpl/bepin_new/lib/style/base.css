@@ -3,7 +3,7 @@ body {
     @apply grid min-h-screen dark:bg-gray-700 font-normal;
     font-family: 'Roboto', sans-serif;
     grid-template-rows: auto auto auto 1fr auto;
-    grid-template-columns: max-content auto 1fr;
+    grid-template-columns: max-content minmax(auto, 2fr) 1fr;
     grid-template-areas:
                     "header header header"
                     "breadcrumb breadcrumb breadcrumb"
