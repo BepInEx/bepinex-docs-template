@@ -1,0 +1,16 @@
+
+.inheritance {
+    @apply text-xs my-2;
+    & > h5 {
+        @apply text-sm font-medium;
+    }
+    & > span {
+        @apply block;
+        padding-left: calc(var(--inheritance-level) * theme('spacing.4') + theme('spacing.1'));
+
+        &::before {
+            @apply transform-gpu rotate-90 -translate-x-1 cursor-default;
+            content: '\f148';
+        }
+    }
+}
