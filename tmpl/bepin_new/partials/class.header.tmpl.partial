@@ -1,11 +1,11 @@
 {{!Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See LICENSE file in the project root for full license information.}}
 
 <h1 id="{{id}}" data-uid="{{uid}}">{{>partials/title}}</h1>
-<div class="summary">{{{summary}}}</div>
+<div class="class-summary">{{{summary}}}</div>
 <div class="conceptual">{{{conceptual}}}</div>
 
 {{#inClass}}
-<div class="inheritance">
+<div class="inheritance class-metadata">
   <h5>{{__global.inheritance}}</h5>
   {{#inheritance}}
   <span class="level{{index}}" style="--inheritance-level: {{index}};">{{{specName.0.value}}}</span>
@@ -18,12 +18,12 @@
 {{/inClass}}
 
 {{#implements.0}}
-<div classs="implements">
+<div class="implements class-metadata">
   <h5>{{__global.implements}}</h5>
 {{/implements.0}}
 
 {{#implements}}
-  <div>{{{specName.0.value}}}</div>
+  <span>{{{specName.0.value}}}</span>
 {{/implements}}
 
 {{#implements.0}}
@@ -31,19 +31,19 @@
 {{/implements.0}}
 
 {{#inheritedMembers.0}}
-<div class="inheritedMembers">
+<div class="inheritedMembers class-metadata">
   <h5>{{__global.inheritedMembers}}</h5>
 {{/inheritedMembers.0}}
 
 {{#inheritedMembers}}
-  <div>
+  <span>
   {{#definition}}
     <xref uid="{{definition}}" text="{{nameWithType.0.value}}" alt="{{fullName.0.value}}"/>
   {{/definition}}
   {{^definition}}
     <xref uid="{{uid}}" text="{{nameWithType.0.value}}" alt="{{fullName.0.value}}"/>
   {{/definition}}
-  </div>
+  </span>
 {{/inheritedMembers}}
 
 {{#inheritedMembers.0}}

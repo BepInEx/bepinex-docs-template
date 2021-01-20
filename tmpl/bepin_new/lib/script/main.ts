@@ -193,6 +193,7 @@ function initAffix() {
 }
 
 function main() {
+    hljs.initHighlighting();
     initThemeSwitch();
     initAffix();
 }

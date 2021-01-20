@@ -1,9 +1,15 @@
 
-.inheritance {
+.class-metadata {
     @apply text-xs my-2;
     & > h5 {
         @apply text-sm font-medium;
     }
+    & > span {
+        @apply block;
+    }
+}
+
+.inheritance {
     & > span {
         @apply block;
         padding-left: calc(var(--inheritance-level) * theme('spacing.4') + theme('spacing.1'));
@@ -13,4 +19,8 @@
             content: '\f148';
         }
     }
+}
+
+.class-summary {
+    @apply text-lg font-light;
 }
