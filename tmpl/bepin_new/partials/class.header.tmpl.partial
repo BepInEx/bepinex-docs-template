@@ -61,7 +61,7 @@
 
 {{#syntax.parameters.0}}
 <h5 class="parameters">{{__global.parameters}}</h5>
-<table class="table table-auto">
+<table>
   <thead>
     <tr>
       <th>{{__global.type}}</th>
@@ -87,7 +87,7 @@
 
 {{#syntax.return}}
 <h5 class="returns">{{__global.returns}}</h5>
-<table class="table table-auto">
+<table>
   <thead>
     <tr>
       <th>{{__global.type}}</th>
@@ -105,7 +105,7 @@
 
 {{#syntax.typeParameters.0}}
 <h5 class="typeParameters">{{__global.typeParameters}}</h5>
-<table class="table table-auto">
+<table>
   <thead>
     <tr>
       <th>{{__global.name}}</th>

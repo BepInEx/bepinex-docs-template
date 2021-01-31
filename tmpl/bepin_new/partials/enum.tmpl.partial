@@ -3,7 +3,9 @@
 {{>partials/class.header}}
 {{#children}}
 <h3 id="{{id}}">{{>partials/classSubtitle}}</h3>
-<table class="table table-bordered table-striped table-condensed">
+
+<div class="member-desc">
+<table>
   <thead>
     <tr>
       <th>{{__global.name}}</th>
@@ -13,7 +15,7 @@
   <tbody>
   {{#children}}
     <tr>
-      <td id="{{id}}">{{name.0.value}}</td>
+      <td id="{{id}}"><code>{{name.0.value}}</code></td>
       <td>{{{summary}}}</td>
     </tr>
   {{/children}}
@@ -35,6 +37,7 @@
 {{#seealso.0}}
 </div>
 {{/seealso.0}}
+</div>
 {{#extensionMethods.0}}
 <h3 id="extensionmethods">{{__global.extensionMethods}}</h3>
 {{/extensionMethods.0}}

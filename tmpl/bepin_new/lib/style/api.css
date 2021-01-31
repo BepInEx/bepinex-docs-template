@@ -42,7 +42,7 @@
     }
 
     & table code {
-        @apply text-base;
+        @apply text-sm;
         &::before, &::after {
             content: "";
         }
