@@ -44,12 +44,16 @@
     & aside.affix {
         @apply text-white;
 
-        & > div {
-            @apply border-yellow-200;
+        & li {
+            @apply border-gray-300;
         }
 
         & h1 {
             @apply text-gray-300;
+        }
+
+        & li.active {
+            @apply border-gray-400;
         }
     }
 
@@ -59,5 +63,9 @@
         &:hover {
             @apply text-yellow-200;
         }
+    }
+
+    & main thead {
+        @apply text-gray-200;
     }
 }
