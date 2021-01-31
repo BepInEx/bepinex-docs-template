@@ -65,6 +65,18 @@ a#theme-switch {
 main {
     @apply prose dark:prose-dark p-5 max-w-5xl;
     grid-area: main;
+
+    &.from-toc {
+        grid-column-start: toc;
+    }
+
+    &.to-affix {
+        grid-column-end: affix;
+    }
+
+    &.center {
+        justify-self: center;
+    }
 }
 
 footer {

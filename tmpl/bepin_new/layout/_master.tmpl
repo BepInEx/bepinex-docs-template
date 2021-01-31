@@ -18,7 +18,7 @@
     {{^_disableToc}}
     {{> partials/toc}}
     {{/_disableToc}}
-    <main>
+    <main class="{{#_disableToc}}from-toc{{/_disableToc}} {{#_disableAffix}}to-affix{{/_disableAffix}} {{#_centerBody}}center{{/_centerBody}}">
         {{!body}}
     </main>
     {{^_disableAffix}}
