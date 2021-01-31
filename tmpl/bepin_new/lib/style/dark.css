@@ -52,4 +52,12 @@
             @apply text-gray-300;
         }
     }
+
+    & main a {
+        @apply text-yellow-200;
+
+        &:hover {
+            @apply text-yellow-200;
+        }
+    }
 }
