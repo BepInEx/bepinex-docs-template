@@ -2,7 +2,7 @@ function sanitize(str?: string | null) {
     return str?.replace(/[^\w. ]/gi, c => `&#${c.charCodeAt(0)};`);
 }
 
-function initThemeSwitch() {
+function initTheming() {
     const themeSwitch = document.querySelector("#theme-switch");
     if (!themeSwitch) {
         return;
@@ -14,10 +14,18 @@ function initThemeSwitch() {
         const isDark = html.classList.contains("dark");
         if (isDark) {
             html.classList.remove("dark");
+            localStorage.theme = "light";
         } else {
             html.classList.add("dark");
+            localStorage.theme = "dark";
         }
     });
+
+    if (localStorage.theme === "dark" || !("theme" in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add("dark");
+    } else {
+        document.documentElement.classList.remove("dark");
+    }
 }
 
 interface AffixTocNode {
@@ -194,7 +202,7 @@ function initAffix() {
 
 function main() {
     hljs.initHighlighting();
-    initThemeSwitch();
+    initTheming();
     initAffix();
 }
 
