@@ -50,9 +50,10 @@
 </div>
 {{/inheritedMembers.0}}
 
-<h6><strong>{{__global.namespace}}</strong>: {{{namespace.specName.0.value}}}</h6>
-<h6><strong>{{__global.assembly}}</strong>: {{assemblies.0}}.dll</h6>
+<div><strong>{{__global.namespace}}</strong>: {{{namespace.specName.0.value}}}</div>
+<div><strong>{{__global.assembly}}</strong>: {{assemblies.0}}.dll</div>
 
+<div class="member-desc">
 <h5 id="{{id}}_syntax">{{__global.syntax}}</h5>
 <div class="codewrapper">
   <pre><code class="lang-{{_lang}} hljs">{{syntax.content.0.value}}</code></pre>
@@ -60,7 +61,7 @@
 
 {{#syntax.parameters.0}}
 <h5 class="parameters">{{__global.parameters}}</h5>
-<table class="table table-bordered table-striped table-condensed">
+<table class="table table-auto">
   <thead>
     <tr>
       <th>{{__global.type}}</th>
@@ -73,8 +74,8 @@
 
 {{#syntax.parameters}}
     <tr>
-      <td>{{{type.specName.0.value}}}</td>
-      <td><span class="parametername">{{{id}}}</span></td>
+      <td><code>{{{type.specName.0.value}}}</code></td>
+      <td><span class="parametername"><code>{{{id}}}</code></span></td>
       <td>{{{description}}}</td>
     </tr>
 {{/syntax.parameters}}
@@ -86,7 +87,7 @@
 
 {{#syntax.return}}
 <h5 class="returns">{{__global.returns}}</h5>
-<table class="table table-bordered table-striped table-condensed">
+<table class="table table-auto">
   <thead>
     <tr>
       <th>{{__global.type}}</th>
@@ -95,7 +96,7 @@
   </thead>
   <tbody>
     <tr>
-      <td>{{{type.specName.0.value}}}</td>
+      <td><code>{{{type.specName.0.value}}}</code></td>
       <td>{{{description}}}</td>
     </tr>
   </tbody>
@@ -104,7 +105,7 @@
 
 {{#syntax.typeParameters.0}}
 <h5 class="typeParameters">{{__global.typeParameters}}</h5>
-<table class="table table-bordered table-striped table-condensed">
+<table class="table table-auto">
   <thead>
     <tr>
       <th>{{__global.name}}</th>
@@ -115,7 +116,7 @@
 {{/syntax.typeParameters.0}}
 {{#syntax.typeParameters}}
     <tr>
-      <td><span class="parametername">{{{id}}}</span></td>
+      <td><span class="parametername"><code>{{{id}}}</code></span></td>
       <td>{{{description}}}</td>
     </tr>
 {{/syntax.typeParameters}}
@@ -133,6 +134,10 @@
 <h5 id="{{id}}_examples"><strong>{{__global.examples}}</strong></h5>
 {{/example.0}}
 
+<div class="example">
 {{#example}}
 {{{.}}}
 {{/example}}
+</div>
+
+</div>

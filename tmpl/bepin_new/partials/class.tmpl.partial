@@ -6,25 +6,30 @@
 <h3 id="{{id}}">{{>partials/classSubtitle}}</h3>
 {{#children}}
 
-{{^_disableContribution}}
-{{#docurl}}
-<span class="small pull-right mobile-hide">
-  <span class="divider">|</span>
-  <a href="{{docurl}}">{{__global.improveThisDoc}}</a>
-</span>{{/docurl}}
-{{#sourceurl}}
-<span class="small pull-right mobile-hide">
-  <a href="{{sourceurl}}">{{__global.viewSource}}</a>
-</span>{{/sourceurl}}
-{{/_disableContribution}}
+<div class="member-header">
+  <h4 id="{{id}}" data-uid="{{uid}}">{{name.0.value}}</h4>
 
-{{#overload}}
-<a id="{{id}}" data-uid="{{uid}}"></a>
-{{/overload}}
+  {{^_disableContribution}}
+  <div class="contribution-info">
+    {{#docurl}}
+    <a href="{{docurl}}">{{__global.improveThisDoc}}</a>
+    {{/docurl}}
 
-<h4 id="{{id}}" data-uid="{{uid}}">{{name.0.value}}</h4>
-<div class="markdown level1 summary">{{{summary}}}</div>
-<div class="markdown level1 conceptual">{{{conceptual}}}</div>
+    {{#sourceurl}}
+    <a href="{{sourceurl}}">{{__global.viewSource}}</a>
+    {{/sourceurl}}
+  </div>
+  {{/_disableContribution}}
+
+  {{#overload}}
+  <a id="{{id}}" data-uid="{{uid}}"></a>
+  {{/overload}}
+</div>
+
+<div class="member-desc">
+
+<div class="summary">{{{summary}}}</div>
+<div class="conceptual">{{{conceptual}}}</div>
 <h5 class="decalaration">{{__global.declaration}}</h5>
 
 {{#syntax}}
@@ -214,6 +219,7 @@
 {{#seealso.0}}
 </div>
 {{/seealso.0}}
+</div>
 
 {{/children}}
 
