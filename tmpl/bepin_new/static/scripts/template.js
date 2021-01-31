@@ -127,11 +127,12 @@ function initAffix() {
     let currentSelectedItem = undefined;
     const selectCurrentAffixTocItem = () => {
         let current = binarySearch(headers, e => {
+            const EPS = 0.5;
             const y = e.getBoundingClientRect().y;
-            if (y < 0) {
+            if (y < EPS) {
                 return 1;
             }
-            if (y > 0) {
+            if (y > EPS) {
                 return -1;
             }
             return 0;
