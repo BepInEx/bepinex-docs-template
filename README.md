@@ -1,6 +1,9 @@
 # BepInEx DocFx template
 
-A **WIP** template for new BepInEx documentation!
+> **This template is still WIP**  
+> Do not use in production!
+
+A template for new BepInEx documentation!
 
 ![Template Preview](./docfx_preview.gif)
 
