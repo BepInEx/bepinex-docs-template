@@ -68,4 +68,8 @@
     & main thead {
         @apply text-gray-200;
     }
+
+    & main ol > li::before {
+        @apply text-gray-300;
+    }
 }
