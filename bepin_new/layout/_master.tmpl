@@ -25,7 +25,9 @@
     {{> partials/affix}}
     {{/_disableAffix}}
     {{^_disableFooter}}
-    <footer></footer>
+    <footer>
+        <div>BepInEx Docs{{#_docsVersion}} ({{_docsVersion}}){{/_docsVersion}}</div>
+    </footer>
     {{/_disableFooter}}
 {{> partials/scripts}}
 </body>
