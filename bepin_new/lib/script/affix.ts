@@ -6,11 +6,11 @@ namespace Affix {
         parent?: AffixTocNode;
         el?: Element;
     }
-    
+
     function sanitize(str?: string | null) {
         return str?.replace(/[^\w. ]/gi, c => `&#${c.charCodeAt(0)};`);
     }
-    
+
     function getAffixToc() {
         const mainEl = document.querySelector("main");
         const affixToc: AffixTocNode = { level: 0, items: [] };
@@ -43,7 +43,7 @@ namespace Affix {
         }
         return affixToc;
     }
-    
+
     function binarySearch<T>(arr: T[], c: (a: T) => -1 | 0 | 1): T | undefined {
         if (arr.length == 0) {
             return undefined;
@@ -67,11 +67,11 @@ namespace Affix {
         };
         return search(0, arr.length - 1);
     }
-    
+
     export function init() {
         const toc = getAffixToc();
         const affixEl = document.querySelector("aside.affix > div");
-    
+
         if (!affixEl) {
             return;
         }
@@ -114,7 +114,7 @@ namespace Affix {
             <h1>Contents</h1>
             <ul class="affixTocList">${res}</ul>
         `;
-    
+
         let currentSelectedItem: Element | undefined = undefined;
         const selectCurrentAffixTocItem = () => {
             let current = binarySearch(headers, e => {
@@ -134,11 +134,11 @@ namespace Affix {
             if (current == headers[0] && current.getBoundingClientRect().y > 0) {
                 current = undefined;
             }
-    
+
             if (current == currentSelectedItem) {
                 return;
             }
-    
+
             const applyCurrent = (applyDetails: (n: HTMLDetailsElement) => void, applyAnchor: (n: HTMLAnchorElement) => void) => {
                 if (!currentSelectedItem) {
                     return;
