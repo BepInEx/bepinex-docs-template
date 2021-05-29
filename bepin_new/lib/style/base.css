@@ -2,13 +2,14 @@
 body {
     @apply grid min-h-screen dark:bg-gray-700 font-normal;
     font-family: 'Roboto', sans-serif;
-    grid-template-rows: auto auto auto 1fr auto;
+    grid-template-rows: auto auto auto auto 1fr auto;
     grid-template-columns: max-content minmax(auto, 2fr) 1fr;
     grid-template-areas:
                     "header header header"
                     "breadcrumb breadcrumb breadcrumb"
-                    "toc affix ."
-                    "toc main main"
+                    "toc toc toc"
+                    "affix . ."
+                    "main main main"
                     "footer footer footer";
 }
 
@@ -66,14 +67,6 @@ main {
     @apply prose dark:prose-dark p-5 max-w-5xl;
     grid-area: main;
 
-    &.from-toc {
-        grid-column-start: toc;
-    }
-
-    &.to-affix {
-        grid-column-end: affix;
-    }
-
     &.center {
         justify-self: center;
     }
@@ -84,12 +77,19 @@ footer {
 }
 
 aside.toc {
-    @apply px-5 font-light text-gray-900;
+    @apply font-light text-gray-900;
     grid-area: toc;
-    min-width: 15rem;
 
-    & > div {
-        @apply sticky overflow-y-auto py-3 top-0 max-h-screen;
+    & > span.toc-menu-button {
+        @apply flex flex-row uppercase py-2 font-light justify-center items-center;
+    }
+
+    & > div.toc-items {
+        @apply py-3 hidden;
+
+        &.open {
+            @apply block;
+        }
     }
 
     & span {
@@ -200,12 +200,38 @@ aside.affix {
     }
 }
 
+@screen md {
+    body {
+        grid-template-areas:
+                    "header header header"
+                    "breadcrumb breadcrumb breadcrumb"
+                    ". . ."
+                    "toc affix ."
+                    "toc main main"
+                    "footer footer footer";
+    }
+
+    aside.toc  {
+        @apply px-5;
+        min-width: 15rem;
+        
+        & > span.toc-menu-button {
+            @apply hidden;
+        }
+
+        & > div.toc-items {
+            @apply block sticky overflow-y-auto top-0 max-h-screen;
+        }
+    }
+}
+
 @screen xl {
     body {
         grid-template-areas:
                         "header header header"
                         "breadcrumb breadcrumb breadcrumb"
-                        "breadcrumb breadcrumb breadcrumb"
+                        ". . ."
+                        ". . ."
                         "toc main affix"
                         "footer footer footer";
     }
@@ -214,6 +240,16 @@ aside.affix {
         @apply py-5;
         & > div {
             @apply sticky top-3;
+        }
+    }
+
+    main {
+        &.to-affix {
+            grid-column-end: affix;
+        }
+
+        &.from-toc {
+            grid-column-start: toc;
         }
     }
 }
