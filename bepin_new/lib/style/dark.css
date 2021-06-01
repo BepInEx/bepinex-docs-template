@@ -72,4 +72,8 @@
     & main ol > li::before {
         @apply text-gray-300;
     }
+
+    & footer {
+        @apply bg-gray-800 text-gray-300;
+    }
 }
