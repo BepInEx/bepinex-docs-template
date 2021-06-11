@@ -1,1 +1,339 @@
-"use strict";var Affix,Theme,TabGroup,TOC;function main(){hljs.initHighlighting(),Theme.init(),Affix.init(),TabGroup.init(),TOC.init()}!function(t){function e(t){return null===t||void 0===t?void 0:t.replace(/[^\w. ]/gi,t=>`&#${t.charCodeAt(0)};`)}t.init=function(){const t=function(){const t=document.querySelector("main"),e={level:0,items:[]};if(!t)return e;const n=t.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]"),i=(t,e)=>{let n=!1;return e.level<t.level&&(0==e.items.length||0!=e.items.length&&!(n=i(t,e.items[e.items.length-1])))?(t.parent=e,e.items.push(t),!0):e.level>t.level&&e.parent?(e.parent.items=[t],t.parent=e.parent,e.parent=t,!0):n};for(const t of n)i({level:+t.tagName.substring(1),el:t,items:[]},e);return e}(),n=document.querySelector("aside.affix > div");if(!n)return;if(0==t.items.length)return;const i=[],o=(t,n=0)=>{if(0==t.items.length)return"";if(0<n&&n<3){const r=t=>t.items.length>0&&n<2,l=t=>{var l,s,a,c,u,d;return t.el&&i.push(t.el),r(t)?`\n                    <details>\n                        <summary>\n                            <a id="toc-affix-${null===(l=t.el)||void 0===l?void 0:l.id}" href="#${null===(s=t.el)||void 0===s?void 0:s.id}">${e(null===(a=t.el)||void 0===a?void 0:a.textContent)}</a>\n                        </summary>\n                        <ul>\n                            ${o(t,n+1)}\n                        </ul>\n                    </details>\n                `:`<a id="toc-affix-${null===(c=t.el)||void 0===c?void 0:c.id}" href="#${null===(u=t.el)||void 0===u?void 0:u.id}">${e(null===(d=t.el)||void 0===d?void 0:d.textContent)}</a>`};return t.items.map(t=>`<li>${l(t)}</li>`).join("")}return t.items.map(t=>o(t,n+1)).join("")},r=o(t);if(0==r.trim().length)return;n.innerHTML=`\n            <h1>Contents</h1>\n            <ul class="affixTocList">${r}</ul>\n        `;let l=void 0;const s=()=>{let t=function(t,e){if(0==t.length)return;if(1==t.length)return t[0];const n=(i,o)=>{const r=Math.floor((i+o)/2);if(r==i||r==o)return t[r];const l=e(t[r]);return 0==l?t[r]:l<0?n(i,r):n(r,o)};return n(0,t.length-1)}(i,t=>{const e=t.getBoundingClientRect().y;return e<.5?1:e>.5?-1:0});if(!t)return;if(t==i[0]&&t.getBoundingClientRect().y>0&&(t=void 0),t==l)return;const e=(t,e)=>{if(!l)return;const i=o=>{o!=n&&(o instanceof HTMLDetailsElement&&t(o),o instanceof HTMLAnchorElement&&e(o),o.parentElement&&i(o.parentElement))},o=document.querySelector(`aside.affix a#toc-affix-${l.id}`);o&&i(o)},o=(t,e)=>{t instanceof HTMLLIElement?e(t):t.parentElement&&o(t.parentElement,e)};e(t=>t.removeAttribute("open"),t=>o(t,t=>t.classList.remove("active"))),l=t,e(t=>t.setAttribute("open","open"),t=>o(t,t=>t.classList.add("active")))};s(),document.addEventListener("scroll",s)}}(Affix||(Affix={})),function(t){t.init=function(){const t=document.querySelector("#theme-switch");t&&t.addEventListener("click",t=>{t.preventDefault();const e=document.documentElement;e.classList.contains("dark")?(e.classList.remove("dark"),localStorage.theme="light"):(e.classList.add("dark"),localStorage.theme="dark")})}}(Theme||(Theme={})),function(t){const e=[];function n(t,n=!0){const i=new Set;i.add(t);for(const n of e){const e=n.map(([t,e])=>t.dataset.tab).findIndex(e=>t==e);if(e<0){const t=n.find(([t,e])=>!e.hidden);t&&t[0].dataset.tab&&i.add(t[0].dataset.tab)}else for(const[t,[i,o]]of n.entries())o.hidden=t!=e,o.setAttribute("aria-hidden",(t!=e).toString()),i.setAttribute("aria-selected",(t==e).toString()),i.setAttribute("tabindex",t==e?"0":"-1")}if(n){const t=new URLSearchParams(window.location.search);t.set("tabs",[...i].join(",")),history.pushState(null,"",`${window.location.pathname}?${t.toString()}`)}}t.init=function(){var t;const i=document.querySelectorAll(".tabGroup");for(const t of i){const i=[...t.querySelectorAll("ul[role='tablist'] a")],o=i.map(t=>[t,document.getElementById(t.getAttribute("href").substring(1))]);i.forEach(t=>t.addEventListener("click",e=>{e.preventDefault(),n(t.dataset.tab)})),e.push(o)}const o=new URLSearchParams(window.location.search),r=new Set(null===(t=o.get("tabs"))||void 0===t?void 0:t.split(","));for(const t of r)n(t,!1)}}(TabGroup||(TabGroup={})),function(t){t.init=function(){const t=document.querySelector(".toc-menu-button"),e=document.querySelector(".toc-items");t&&e&&t.addEventListener("click",()=>{e.classList.contains("open")?e.classList.remove("open"):e.classList.add("open")})}}(TOC||(TOC={})),main();
+"use strict";
+var Affix;
+(function (Affix) {
+    function sanitize(str) {
+        return str === null || str === void 0 ? void 0 : str.replace(/[^\w. ]/gi, c => `&#${c.charCodeAt(0)};`);
+    }
+    function getAffixToc() {
+        const mainEl = document.querySelector("main");
+        const affixToc = { level: 0, items: [] };
+        if (!mainEl) {
+            return affixToc;
+        }
+        const headers = mainEl.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]");
+        const addItem = (item, node) => {
+            let result = false;
+            if (node.level < item.level
+                && (node.items.length == 0
+                    || node.items.length != 0 && !(result = addItem(item, node.items[node.items.length - 1])))) {
+                item.parent = node;
+                node.items.push(item);
+                return true;
+            }
+            else if (node.level > item.level && node.parent) {
+                node.parent.items = [item];
+                item.parent = node.parent;
+                node.parent = item;
+                return true;
+            }
+            return result;
+        };
+        for (const h of headers) {
+            addItem({
+                level: +h.tagName.substring(1),
+                el: h,
+                items: []
+            }, affixToc);
+        }
+        return affixToc;
+    }
+    function binarySearch(arr, c) {
+        if (arr.length == 0) {
+            return undefined;
+        }
+        if (arr.length == 1) {
+            return arr[0];
+        }
+        const search = (start, end) => {
+            const mid = Math.floor((start + end) / 2);
+            if (mid == start || mid == end) {
+                return arr[mid];
+            }
+            const comp = c(arr[mid]);
+            if (comp == 0) {
+                return arr[mid];
+            }
+            if (comp < 0) {
+                return search(start, mid);
+            }
+            return search(mid, end);
+        };
+        return search(0, arr.length - 1);
+    }
+    function init() {
+        const toc = getAffixToc();
+        const affixEl = document.querySelector("aside.affix > div");
+        if (!affixEl) {
+            return;
+        }
+        if (toc.items.length == 0) {
+            return;
+        }
+        const headers = [];
+        const tocAffixPrefix = "toc-affix-";
+        const makeList = (node, level = 0) => {
+            if (node.items.length == 0) {
+                return "";
+            }
+            if (0 < level && level < 3) {
+                const sublist = (n) => n.items.length > 0 && level < 2;
+                const renderItem = (n) => {
+                    var _a, _b, _c, _d, _e, _f;
+                    if (n.el) {
+                        headers.push(n.el);
+                    }
+                    return sublist(n) ? `
+                    <details>
+                        <summary>
+                            <a id="${tocAffixPrefix}${(_a = n.el) === null || _a === void 0 ? void 0 : _a.id}" href="#${(_b = n.el) === null || _b === void 0 ? void 0 : _b.id}">${sanitize((_c = n.el) === null || _c === void 0 ? void 0 : _c.textContent)}</a>
+                        </summary>
+                        <ul>
+                            ${makeList(n, level + 1)}
+                        </ul>
+                    </details>
+                ` : `<a id="${tocAffixPrefix}${(_d = n.el) === null || _d === void 0 ? void 0 : _d.id}" href="#${(_e = n.el) === null || _e === void 0 ? void 0 : _e.id}">${sanitize((_f = n.el) === null || _f === void 0 ? void 0 : _f.textContent)}</a>`;
+                };
+                return node.items.map(n => `<li>${renderItem(n)}</li>`).join("");
+            }
+            else {
+                return node.items.map(n => makeList(n, level + 1)).join("");
+            }
+        };
+        const res = makeList(toc);
+        if (res.trim().length == 0) {
+            return;
+        }
+        affixEl.innerHTML = `
+            <h1>Contents</h1>
+            <ul class="affixTocList">${res}</ul>
+        `;
+        let currentSelectedItem = undefined;
+        const selectCurrentAffixTocItem = () => {
+            let current = binarySearch(headers, e => {
+                const EPS = 0.5;
+                const y = e.getBoundingClientRect().y;
+                if (y < EPS) {
+                    return 1;
+                }
+                if (y > EPS) {
+                    return -1;
+                }
+                return 0;
+            });
+            if (!current) {
+                return;
+            }
+            if (current == headers[0] && current.getBoundingClientRect().y > 0) {
+                current = undefined;
+            }
+            if (current == currentSelectedItem) {
+                return;
+            }
+            const applyCurrent = (applyDetails, applyAnchor) => {
+                if (!currentSelectedItem) {
+                    return;
+                }
+                const a = (n) => {
+                    if (n == affixEl) {
+                        return;
+                    }
+                    if (n instanceof HTMLDetailsElement) {
+                        applyDetails(n);
+                    }
+                    if (n instanceof HTMLAnchorElement) {
+                        applyAnchor(n);
+                    }
+                    if (n.parentElement) {
+                        a(n.parentElement);
+                    }
+                };
+                const tocItem = document.querySelector(`aside.affix a#${tocAffixPrefix}${currentSelectedItem.id}`);
+                if (tocItem) {
+                    a(tocItem);
+                }
+            };
+            const applyOnFirstList = (n, apply) => {
+                if (n instanceof HTMLLIElement) {
+                    apply(n);
+                }
+                else if (n.parentElement) {
+                    applyOnFirstList(n.parentElement, apply);
+                }
+            };
+            applyCurrent(n => n.removeAttribute("open"), n => applyOnFirstList(n, p => p.classList.remove("active")));
+            currentSelectedItem = current;
+            applyCurrent(n => n.setAttribute("open", "open"), n => applyOnFirstList(n, p => p.classList.add("active")));
+        };
+        selectCurrentAffixTocItem();
+        document.addEventListener("scroll", selectCurrentAffixTocItem);
+    }
+    Affix.init = init;
+})(Affix || (Affix = {}));
+var Theme;
+(function (Theme) {
+    function init() {
+        const themeSwitch = document.querySelector("#theme-switch");
+        if (!themeSwitch) {
+            return;
+        }
+        themeSwitch.addEventListener("click", e => {
+            e.preventDefault();
+            const html = document.documentElement;
+            const isDark = html.classList.contains("dark");
+            if (isDark) {
+                html.classList.remove("dark");
+                localStorage.theme = "light";
+            }
+            else {
+                html.classList.add("dark");
+                localStorage.theme = "dark";
+            }
+        });
+    }
+    Theme.init = init;
+})(Theme || (Theme = {}));
+var TabGroup;
+(function (TabGroup) {
+    const tabGroups = [];
+    function init() {
+        var _a;
+        const tabGroupEls = document.querySelectorAll(".tabGroup");
+        for (const tabGroup of tabGroupEls) {
+            const tabLinks = [...tabGroup.querySelectorAll("ul[role='tablist'] a")];
+            const tabs = tabLinks.map(a => [a, document.getElementById(a.getAttribute("href").substring(1))]);
+            tabLinks.forEach(a => a.addEventListener("click", e => {
+                e.preventDefault();
+                selectTab(a.dataset.tab);
+            }));
+            tabGroups.push(tabs);
+        }
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedTabs = new Set((_a = urlParams.get("tabs")) === null || _a === void 0 ? void 0 : _a.split(","));
+        for (const selectedTab of selectedTabs) {
+            selectTab(selectedTab, false);
+        }
+    }
+    TabGroup.init = init;
+    function selectTab(tabName, update = true) {
+        const selectedTabs = new Set();
+        selectedTabs.add(tabName);
+        for (const tabGroup of tabGroups) {
+            const tabNames = tabGroup.map(([a, _]) => a.dataset.tab);
+            const selectedTabIndex = tabNames.findIndex(t => tabName == t);
+            if (selectedTabIndex < 0) {
+                const selectedTab = tabGroup.find(([_, select]) => !select.hidden);
+                if (selectedTab && selectedTab[0].dataset.tab) {
+                    selectedTabs.add(selectedTab[0].dataset.tab);
+                }
+                continue;
+            }
+            for (const [i, [a, select]] of tabGroup.entries()) {
+                select.hidden = i != selectedTabIndex;
+                select.setAttribute("aria-hidden", (i != selectedTabIndex).toString());
+                a.setAttribute("aria-selected", (i == selectedTabIndex).toString());
+                a.setAttribute("tabindex", i == selectedTabIndex ? "0" : "-1");
+            }
+        }
+        if (update) {
+            const searchParams = new URLSearchParams(window.location.search);
+            searchParams.set("tabs", [...selectedTabs].join(","));
+            history.pushState(null, "", `${window.location.pathname}?${searchParams.toString()}`);
+        }
+    }
+})(TabGroup || (TabGroup = {}));
+var TOC;
+(function (TOC) {
+    function init() {
+        const tocMenuButton = document.querySelector(".toc-menu-button");
+        const tocItems = document.querySelector(".toc-items");
+        if (!tocMenuButton || !tocItems) {
+            return;
+        }
+        tocMenuButton.addEventListener("click", () => {
+            if (tocItems.classList.contains("open")) {
+                tocItems.classList.remove("open");
+            }
+            else {
+                tocItems.classList.add("open");
+            }
+        });
+    }
+    TOC.init = init;
+})(TOC || (TOC = {}));
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var Versioning;
+(function (Versioning) {
+    function compareVersions(a, b) {
+        const pad = (v) => {
+            if (v.length < 3) {
+                const to = 3 - v.length;
+                for (let i = 0; i < to; i++) {
+                    v.push(0);
+                }
+            }
+            return v;
+        };
+        const verA = pad(a.split(".").map(v => Number.parseInt(v)));
+        const verB = pad(b.split(".").map(v => Number.parseInt(v)));
+        for (let i = 0; i < 3; i++) {
+            const va = verA[i];
+            const vb = verB[i];
+            if (va < vb) {
+                return 1;
+            }
+        }
+        return -1;
+    }
+    function init() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let data;
+            try {
+                const result = yield fetch("/versions.json");
+                data = (yield result.json());
+            }
+            catch (e) {
+                return;
+            }
+            const versionPickerDiv = document.getElementById("version-picker");
+            if (!versionPickerDiv) {
+                return;
+            }
+            const selectEl = document.createElement("select");
+            data.versions = data.versions.sort((a, b) => {
+                if (a == "master") {
+                    return -1;
+                }
+                if (b == "master") {
+                    return 1;
+                }
+                return compareVersions(a, b);
+            });
+            for (const ver of data.versions) {
+            }
+            console.log(data);
+        });
+    }
+    Versioning.init = init;
+})(Versioning || (Versioning = {}));
+/// <reference path="affix.ts" />
+/// <reference path="theme.ts" />
+/// <reference path="tabGroup.ts" />
+/// <reference path="toc.ts" />
+/// <reference path="versioning.ts" />
+function main() {
+    hljs.initHighlighting();
+    Versioning.init();
+    Theme.init();
+    Affix.init();
+    TabGroup.init();
+    TOC.init();
+}
+main();

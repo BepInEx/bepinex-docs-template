@@ -6,6 +6,7 @@ body {
     grid-template-columns: max-content minmax(auto, 2fr) 1fr;
     grid-template-areas:
                     "header header header"
+                    "messages messages messages"
                     "breadcrumb breadcrumb breadcrumb"
                     "toc toc toc"
                     "affix . ."
@@ -16,6 +17,15 @@ body {
 header {
     @apply bg-gray-50 border-b-2 border-gray-200 p-1;
     grid-area: header;
+}
+
+section.messages {
+    @apply flex flex-col text-sm;
+    grid-area: messages;
+
+    & > div.message {
+        @apply w-full px-2 py-3;
+    }
 }
 
 section.breadcrumb {
@@ -59,8 +69,12 @@ nav {
     @apply h-24 mx-2;
 }
 
+div#version-picker {
+    @apply ml-auto mr-3;
+}
+
 a#theme-switch {
-    @apply text-3xl ml-auto cursor-pointer text-black;
+    @apply text-3xl cursor-pointer text-black;
 }
 
 main {
@@ -209,6 +223,7 @@ aside.affix {
     body {
         grid-template-areas:
                     "header header header"
+                    "messages messages messages"
                     "breadcrumb breadcrumb breadcrumb"
                     ". . ."
                     "toc affix ."
@@ -234,6 +249,7 @@ aside.affix {
     body {
         grid-template-areas:
                         "header header header"
+                        "messages messages messages"
                         "breadcrumb breadcrumb breadcrumb"
                         ". . ."
                         ". . ."
