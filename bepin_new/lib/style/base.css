@@ -19,12 +19,16 @@ header {
     grid-area: header;
 }
 
-section.messages {
+section#global-messages {
     @apply flex flex-col text-sm;
     grid-area: messages;
 
     & > div.message {
-        @apply w-full px-2 py-3;
+        @apply w-full px-2 py-3 text-center text-white;
+
+        & a {
+            @apply font-medium;
+        }
     }
 }
 

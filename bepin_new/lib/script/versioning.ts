@@ -77,5 +77,26 @@ namespace Versioning {
             const tag = selectEl.value;
             window.location.href = `/${tag}`;
         });
+
+        const messages = document.getElementById("global-messages");
+
+        if (!messages) {
+            return;
+        }
+
+        if (docsVersion == "master") {
+            const msgDiv = document.createElement("div");
+            msgDiv.classList.add("message");
+            msgDiv.innerHTML = `<span>You are viewing documentation for a yet unreleased BepInEx version.</span> <a href="/">View latest stable docs (${data.latestTag}).</a>`;
+            msgDiv.style.backgroundColor = "#CA8423";
+            messages.appendChild(msgDiv);
+        }
+        else if (docsVersion != data.latestTag) {
+            const msgDiv = document.createElement("div");
+            msgDiv.classList.add("message");
+            msgDiv.innerHTML = `<span>You are viewing old documentation.</span> <a href="/">View latest stable docs (${data.latestTag}).</a>`;
+            msgDiv.style.backgroundColor = "#CA3423";
+            messages.appendChild(msgDiv);
+        }
     }
 }
