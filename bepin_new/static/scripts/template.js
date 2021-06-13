@@ -308,17 +308,32 @@ var Versioning;
             }
             const selectEl = document.createElement("select");
             data.versions = data.versions.sort((a, b) => {
-                if (a == "master") {
+                if (a.tag == "master") {
                     return -1;
                 }
-                if (b == "master") {
+                if (b.tag == "master") {
                     return 1;
                 }
-                return compareVersions(a, b);
+                return compareVersions(a.version, b.version);
             });
             for (const ver of data.versions) {
+                const verOpt = document.createElement("option");
+                verOpt.value = ver.tag;
+                verOpt.textContent = ver.version + (ver.tag == data.latestTag ? " (latest)" : "");
+                selectEl.appendChild(verOpt);
+                if (ver.tag == "master") {
+                    const divider = document.createElement("option");
+                    divider.disabled = true;
+                    divider.textContent = "──────────";
+                    selectEl.appendChild(divider);
+                }
             }
-            console.log(data);
+            selectEl.value = docsVersion;
+            versionPickerDiv.appendChild(selectEl);
+            selectEl.addEventListener("change", () => {
+                const tag = selectEl.value;
+                window.location.href = `/${tag}`;
+            });
         });
     }
     Versioning.init = init;
