@@ -15,7 +15,7 @@ body {
 }
 
 header {
-    @apply bg-gray-50 border-b-2 border-gray-200 p-1;
+    @apply bg-gray-50 border-b-2 border-gray-200;
     grid-area: header;
 }
 
@@ -50,19 +50,45 @@ section.breadcrumb {
 }
 
 nav {
-    @apply flex flex-row items-center;
+    @apply grid items-center;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: max-content 1fr auto auto;
+    grid-template-areas:
+                        "logo . light menu-icon"
+                        "menu menu menu menu"
+                        "versions versions versions versions";
+
+    & > .navbar-brand {
+        grid-area: logo;
+    }
+
+    & > #version-picker {
+        @apply w-full py-2 bg-gray-100;
+        grid-area: versions;
+
+        & > select {
+            @apply m-auto block;
+        }
+    }
+
+    & > #theme-switch {
+        grid-area: light;
+    }
+
+    & > #menu-switch {
+        grid-area: menu-icon;
+    }
 
     & > div.nav {
-        @apply ml-10 flex flex-row;
+        @apply flex flex-col bg-gray-100;
+        grid-area: menu;
     
         & > .nav-item {
-            @apply mx-3;
-    
             & > a {
-                @apply font-light text-yellow-900;
+                @apply font-light text-yellow-900 px-3 py-3 block;
     
                 &:hover {
-                    @apply text-yellow-700;
+                    @apply text-yellow-700 bg-gray-200;
                 }
             }
         }
@@ -73,11 +99,7 @@ nav {
     @apply h-24 mx-2;
 }
 
-div#version-picker {
-    @apply ml-auto mr-3;
-}
-
-a#theme-switch {
+a#theme-switch, a#menu-switch {
     @apply text-3xl cursor-pointer text-black;
 }
 
@@ -233,6 +255,28 @@ aside.affix {
                     "toc affix ."
                     "toc main main"
                     "footer footer footer";
+    }
+
+    nav {
+        grid-template-rows: auto;
+        grid-template-columns: max-content 1fr auto auto;
+        grid-template-areas: "logo menu versions light";
+
+        & > #menu-switch {
+            @apply hidden;
+        }
+
+        & > #version-picker {
+            @apply bg-gray-50;
+        }
+    
+        & > div.nav {
+            @apply flex-row bg-gray-50;
+
+            & > .nav-item > a:hover {
+                @apply bg-gray-50;
+            }
+        }
     }
 
     aside.toc  {

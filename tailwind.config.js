@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors');
+
 module.exports = {
   purge: [
     "./**/*.tmpl",
@@ -5,6 +7,15 @@ module.exports = {
   ],
   darkMode: 'class', // or 'media' or 'class'
   theme: {
+    colors: {
+      transparent: 'transparent',
+      gray: colors.warmGray,
+      black: colors.black,
+      yellow: colors.yellow,
+      white: colors.white,
+      blue: colors.blue,
+      red: colors.red,
+    },
     extend: {
       typography: (theme) => ({
         dark: {

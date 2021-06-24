@@ -6,5 +6,6 @@
     {{> partials/navbar-items}}
     {{/_nav}}
     <div id="version-picker"></div>
+    <a id="menu-switch" class="icon-menu"></a>
     <a id="theme-switch" class="icon-lightbulb"></a>
 </nav>
