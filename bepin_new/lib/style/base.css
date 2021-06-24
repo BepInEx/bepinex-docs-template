@@ -63,7 +63,7 @@ nav {
     }
 
     & > #version-picker {
-        @apply w-full py-2 bg-gray-100;
+        @apply w-full py-2 bg-gray-100 hidden;
         grid-area: versions;
 
         & > select {
@@ -80,7 +80,7 @@ nav {
     }
 
     & > div.nav {
-        @apply flex flex-col bg-gray-100;
+        @apply hidden flex-col bg-gray-100;
         grid-area: menu;
     
         & > .nav-item {
@@ -91,6 +91,16 @@ nav {
                     @apply text-yellow-700 bg-gray-200;
                 }
             }
+        }
+    }
+
+    &.open {
+        & > #version-picker {
+            @apply block;
+        }
+
+        & > div.nav {
+            @apply flex;
         }
     }
 }
@@ -267,11 +277,11 @@ aside.affix {
         }
 
         & > #version-picker {
-            @apply bg-gray-50;
+            @apply bg-gray-50 block;
         }
     
         & > div.nav {
-            @apply flex-row bg-gray-50;
+            @apply flex flex-row bg-gray-50;
 
             & > .nav-item > a:hover {
                 @apply bg-gray-50;

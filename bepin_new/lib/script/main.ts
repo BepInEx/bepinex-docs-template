@@ -3,6 +3,7 @@
 /// <reference path="tabGroup.ts" />
 /// <reference path="toc.ts" />
 /// <reference path="versioning.ts" />
+/// <reference path="mainMenu.ts" />
 
 function main() {
     hljs.initHighlighting();
@@ -11,6 +12,7 @@ function main() {
     Affix.init();
     TabGroup.init();
     TOC.init();
+    MainMenu.init();
 }
 
 main();
