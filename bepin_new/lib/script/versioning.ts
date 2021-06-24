@@ -31,21 +31,13 @@ namespace Versioning {
     }
 
     export async function init() {
-        let data: IVersionsData = {
-            latestTag: "master",
-            versions: [
-                {
-                    tag: "master",
-                    version: "master",
-                }
-            ],
-        };
-        // try {
-        //     const result = await fetch("/versions.json");
-        //     data = await result.json() as IVersionsData;
-        // } catch (e) {
-        //     return;
-        // }
+        let data: IVersionsData;
+        try {
+            const result = await fetch("/versions.json");
+            data = await result.json() as IVersionsData;
+        } catch (e) {
+            return;
+        }
         
         const versionPickerDiv = document.getElementById("version-picker");
         if (!versionPickerDiv) {
