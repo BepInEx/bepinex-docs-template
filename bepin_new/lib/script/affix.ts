@@ -7,6 +7,12 @@ namespace Affix {
         el?: Element;
     }
 
+    enum ResizeStatus {
+        None,
+        Small,
+        Large
+    }
+
     function sanitize(str?: string | null) {
         return str?.replace(/[^\w. ]/gi, c => `&#${c.charCodeAt(0)};`);
     }
@@ -174,7 +180,19 @@ namespace Affix {
             applyCurrent(n => n.setAttribute("open", "open"), n => applyOnFirstList(n, p => p.classList.add("active")));
         };
         selectCurrentAffixTocItem();
-        document.addEventListener("scroll", selectCurrentAffixTocItem);
+        let resizeStatus = ResizeStatus.None;
+        const handleResize = () => {
+            const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+            if (vw < 1280 && (resizeStatus == ResizeStatus.None || resizeStatus == ResizeStatus.Large)) {
+                document.removeEventListener("scroll", selectCurrentAffixTocItem);
+                resizeStatus = ResizeStatus.Small;
+            } else if (vw >= 1280 && (resizeStatus == ResizeStatus.None || resizeStatus == ResizeStatus.Small)) {
+                document.addEventListener("scroll", selectCurrentAffixTocItem);
+                resizeStatus = ResizeStatus.Large;
+            }
+        };
+        handleResize();
+        window.addEventListener("resize", handleResize);
     }
 }
 
