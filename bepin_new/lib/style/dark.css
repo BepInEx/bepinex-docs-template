@@ -48,6 +48,10 @@
     & aside.affix {
         @apply text-white;
 
+        & .source-links a {
+            @apply text-yellow-200;
+        }
+
         & li {
             @apply border-gray-300;
         }

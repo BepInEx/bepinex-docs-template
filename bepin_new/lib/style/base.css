@@ -213,6 +213,10 @@ aside.affix {
     @apply text-sm px-5 pt-5;
     grid-area: affix;
 
+    & .source-links a {
+        @apply font-bold text-xs;
+    }
+
     & li {
         @apply border-l-4 border-yellow-800 border-solid pl-2;
     }

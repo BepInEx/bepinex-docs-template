@@ -76,7 +76,7 @@ namespace Affix {
 
     export function init() {
         const toc = getAffixToc();
-        const affixEl = document.querySelector("aside.affix > div");
+        const affixEl = document.querySelector("aside.affix > div > .affix-toc");
 
         if (!affixEl) {
             return;
