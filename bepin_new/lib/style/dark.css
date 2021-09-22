@@ -116,3 +116,9 @@
         }
     }
 }
+
+:root {
+    --scrollbar-track-dark: theme('colors.gray.900');
+    --scrollbar-track-thumb-dark: theme('colors.gray.700');
+    --scrollbar-thumb-hover-dark: theme('colors.gray.600');
+}

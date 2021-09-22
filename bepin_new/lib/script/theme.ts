@@ -1,3 +1,5 @@
+declare function setScrollbarTheme(theme: string): void;
+
 namespace Theme {
     export function init() {
         const themeSwitch = document.querySelector("#theme-switch");
@@ -12,9 +14,11 @@ namespace Theme {
             if (isDark) {
                 html.classList.remove("dark");
                 localStorage.theme = "light";
+                setScrollbarTheme("light");
             } else {
                 html.classList.add("dark");
                 localStorage.theme = "dark";
+                setScrollbarTheme("dark");
             }
         });
     }
