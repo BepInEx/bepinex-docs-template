@@ -180,12 +180,12 @@ aside.toc {
         }
     }
 
-    & details summary::after {
+    & details > summary::after {
         @apply text-lg;
         content: '\f107';
     }
 
-    & details[open] summary::after {
+    & details[open] > summary::after {
         content: '\f106';
     }
 
@@ -202,7 +202,16 @@ aside.toc {
         }
     }
 
-    & span, & a, & summary {
+    & details > summary {
+        @apply pl-4;
+        margin-left: calc(-2 * theme('spacing.2'));
+    }
+
+    & details > summary > a {
+        @apply pl-0;
+    }
+
+    & summary, & span, & a {
         &:hover {
             @apply bg-gray-100;
         }

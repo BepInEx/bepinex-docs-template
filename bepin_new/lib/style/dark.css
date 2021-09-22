@@ -19,9 +19,9 @@
             }
         }
 
-        & span, & a, & summary {
+        & summary, & span, & a {
             &:hover {
-                @apply bg-gray-800;
+                @apply bg-gray-900;
             }
         }
     }
