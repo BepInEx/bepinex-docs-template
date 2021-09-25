@@ -1,1 +1,421 @@
-"use strict";var Affix,Theme,TabGroup,TOC;!function(e){let t;function n(e){return null===e||void 0===e?void 0:e.replace(/[^\w. ]/gi,e=>`&#${e.charCodeAt(0)};`)}!function(e){e[e.None=0]="None",e[e.Small=1]="Small",e[e.Large=2]="Large"}(t||(t={})),e.init=function(){const e=function(){const e=document.querySelector("main"),t={level:0,items:[]};if(!e)return t;const n=e.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]"),i=(e,t)=>{let n=!1;return t.level<e.level&&(0==t.items.length||0!=t.items.length&&!(n=i(e,t.items[t.items.length-1])))?(e.parent=t,t.items.push(e),!0):t.level>e.level&&t.parent?(t.parent.items=[e],e.parent=t.parent,t.parent=e,!0):n};for(const e of n)i({level:+e.tagName.substring(1),el:e,items:[]},t);return t}(),i=document.querySelector("aside.affix > div > .affix-toc");if(!i)return;if(0==e.items.length)return;const o=[],a=(e,t=0)=>{if(0==e.items.length)return"";if(0<t&&t<3){const i=e=>e.items.length>0&&t<2,r=e=>{var r,s,l,c,d,u;return e.el&&o.push(e.el),i(e)?`\n                    <details>\n                        <summary>\n                            <a id="toc-affix-${null===(r=e.el)||void 0===r?void 0:r.id}" href="#${null===(s=e.el)||void 0===s?void 0:s.id}">${n(null===(l=e.el)||void 0===l?void 0:l.textContent)}</a>\n                        </summary>\n                        <ul>\n                            ${a(e,t+1)}\n                        </ul>\n                    </details>\n                `:`<a id="toc-affix-${null===(c=e.el)||void 0===c?void 0:c.id}" href="#${null===(d=e.el)||void 0===d?void 0:d.id}">${n(null===(u=e.el)||void 0===u?void 0:u.textContent)}</a>`};return e.items.map(e=>`<li>${r(e)}</li>`).join("")}return e.items.map(e=>a(e,t+1)).join("")},r=a(e);if(0==r.trim().length)return;i.innerHTML=`\n            <h1>Contents</h1>\n            <ul class="affixTocList">${r}</ul>\n        `;let s=void 0;const l=()=>{let e=function(e,t){if(0==e.length)return;if(1==e.length)return e[0];const n=(i,o)=>{const a=Math.floor((i+o)/2);if(a==i||a==o)return e[a];const r=t(e[a]);return 0==r?e[a]:r<0?n(i,a):n(a,o)};return n(0,e.length-1)}(o,e=>{const t=e.getBoundingClientRect().y;return t<.5?1:t>.5?-1:0});if(!e)return;if(e==o[0]&&e.getBoundingClientRect().y>0&&(e=void 0),e==s)return;const t=(e,t)=>{if(!s)return;const n=o=>{o!=i&&(o instanceof HTMLDetailsElement&&e(o),o instanceof HTMLAnchorElement&&t(o),o.parentElement&&n(o.parentElement))},o=document.querySelector(`aside.affix a#toc-affix-${s.id}`);o&&n(o)},n=(e,t)=>{e instanceof HTMLLIElement?t(e):e.parentElement&&n(e.parentElement,t)};t(e=>e.removeAttribute("open"),e=>n(e,e=>e.classList.remove("active"))),s=e,t(e=>e.setAttribute("open","open"),e=>n(e,e=>e.classList.add("active")))};l();let c=t.None;const d=()=>{const e=Math.max(document.documentElement.clientWidth||0,window.innerWidth||0);e<1280&&(c==t.None||c==t.Large)?(document.removeEventListener("scroll",l),c=t.Small):e>=1280&&(c==t.None||c==t.Small)&&(document.addEventListener("scroll",l),c=t.Large)};d(),window.addEventListener("resize",d)}}(Affix||(Affix={})),function(e){e.init=function(){const e=document.querySelector("#theme-switch");e&&e.addEventListener("click",e=>{e.preventDefault();const t=document.documentElement;t.classList.contains("dark")?(t.classList.remove("dark"),localStorage.theme="light",setScrollbarTheme("light")):(t.classList.add("dark"),localStorage.theme="dark",setScrollbarTheme("dark"))})}}(Theme||(Theme={})),function(e){const t=[];function n(e,n=!0){const i=new Set;i.add(e);for(const n of t){const t=n.map(([e,t])=>e.dataset.tab).findIndex(t=>e==t);if(t<0){const e=n.find(([e,t])=>!t.hidden);e&&e[0].dataset.tab&&i.add(e[0].dataset.tab)}else for(const[e,[i,o]]of n.entries())o.hidden=e!=t,o.setAttribute("aria-hidden",(e!=t).toString()),i.setAttribute("aria-selected",(e==t).toString()),i.setAttribute("tabindex",e==t?"0":"-1")}if(n){const e=new URLSearchParams(window.location.search);e.set("tabs",[...i].join(",")),history.pushState(null,"",`${window.location.pathname}?${e.toString()}`)}}e.init=function(){var e;const i=document.querySelectorAll(".tabGroup");for(const e of i){const i=[...e.querySelectorAll("ul[role='tablist'] a")],o=i.map(e=>[e,document.getElementById(e.getAttribute("href").substring(1))]);i.forEach(e=>e.addEventListener("click",t=>{t.preventDefault(),n(e.dataset.tab)})),t.push(o)}const o=new URLSearchParams(window.location.search),a=new Set(null===(e=o.get("tabs"))||void 0===e?void 0:e.split(","));for(const e of a)n(e,!1)}}(TabGroup||(TabGroup={})),function(e){e.init=function(){const e=document.querySelector(".toc-menu-button"),t=document.querySelector(".toc-items");e&&t&&e.addEventListener("click",()=>{t.classList.contains("open")?t.classList.remove("open"):t.classList.add("open")})}}(TOC||(TOC={}));var Versioning,MainMenu,__awaiter=this&&this.__awaiter||function(e,t,n,i){return new(n||(n=Promise))(function(o,a){function r(e){try{l(i.next(e))}catch(e){a(e)}}function s(e){try{l(i.throw(e))}catch(e){a(e)}}function l(e){var t;e.done?o(e.value):(t=e.value,t instanceof n?t:new n(function(e){e(t)})).then(r,s)}l((i=i.apply(e,t||[])).next())})};function main(){hljs.initHighlighting(),Versioning.init(),Theme.init(),Affix.init(),TabGroup.init(),TOC.init(),MainMenu.init()}!function(e){e.init=function(){return __awaiter(this,void 0,void 0,function*(){let e;try{e=yield(yield fetch("/versions.json")).json()}catch(e){return}const t=document.getElementById("version-picker");if(!t)return;const n=document.createElement("select");e.versions=e.versions.sort((e,t)=>"master"==e.tag?-1:"master"==t.tag?1:function(e,t){const n=e=>{if(e.length<3){const t=3-e.length;for(let n=0;n<t;n++)e.push(0)}return e},i=n(e.split(".").map(e=>Number.parseInt(e))),o=n(t.split(".").map(e=>Number.parseInt(e)));for(let e=0;e<3;e++)if(i[e]<o[e])return 1;return-1}(e.version,t.version));for(const t of e.versions){const i=document.createElement("option");if(i.value=t.tag,i.textContent=t.version+(t.tag==e.latestTag?" (latest)":""),n.appendChild(i),"master"==t.tag){const e=document.createElement("option");e.disabled=!0,e.textContent="──────────",n.appendChild(e)}}n.value=docsVersion,t.appendChild(n),n.addEventListener("change",()=>{const e=n.value;window.location.href=`/${e}`});const i=document.getElementById("global-messages");if(i)if("master"==docsVersion){const t=document.createElement("div");t.classList.add("message"),t.innerHTML=`<span>You are viewing documentation for a yet unreleased BepInEx version.</span> <a href="/">View latest stable docs (${e.latestTag}).</a>`,t.style.backgroundColor="#CA8423",i.appendChild(t)}else if(docsVersion!=e.latestTag){const t=document.createElement("div");t.classList.add("message"),t.innerHTML=`<span>You are viewing old documentation.</span> <a href="/">View latest stable docs (${e.latestTag}).</a>`,t.style.backgroundColor="#CA3423",i.appendChild(t)}})}}(Versioning||(Versioning={})),function(e){e.init=function(){let e=document.getElementById("menu-switch"),t=document.querySelector("header > nav");e&&e.addEventListener("click",e=>{e.preventDefault(),t&&(t.classList.contains("open")?t.classList.remove("open"):t.classList.add("open"))})}}(MainMenu||(MainMenu={})),main();
+"use strict";
+var Affix;
+(function (Affix) {
+    let ResizeStatus;
+    (function (ResizeStatus) {
+        ResizeStatus[ResizeStatus["None"] = 0] = "None";
+        ResizeStatus[ResizeStatus["Small"] = 1] = "Small";
+        ResizeStatus[ResizeStatus["Large"] = 2] = "Large";
+    })(ResizeStatus || (ResizeStatus = {}));
+    function sanitize(str) {
+        return str === null || str === void 0 ? void 0 : str.replace(/[^\w. ]/gi, c => `&#${c.charCodeAt(0)};`);
+    }
+    function getAffixToc() {
+        const mainEl = document.querySelector("main");
+        const affixToc = { level: 0, items: [] };
+        if (!mainEl) {
+            return affixToc;
+        }
+        const headers = mainEl.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]");
+        const addItem = (item, node) => {
+            let result = false;
+            if (node.level < item.level
+                && (node.items.length == 0
+                    || node.items.length != 0 && !(result = addItem(item, node.items[node.items.length - 1])))) {
+                item.parent = node;
+                node.items.push(item);
+                return true;
+            }
+            else if (node.level > item.level && node.parent) {
+                node.parent.items = [item];
+                item.parent = node.parent;
+                node.parent = item;
+                return true;
+            }
+            return result;
+        };
+        for (const h of headers) {
+            addItem({
+                level: +h.tagName.substring(1),
+                el: h,
+                items: []
+            }, affixToc);
+        }
+        return affixToc;
+    }
+    function binarySearch(arr, c) {
+        if (arr.length == 0) {
+            return undefined;
+        }
+        if (arr.length == 1) {
+            return arr[0];
+        }
+        const search = (start, end) => {
+            const mid = Math.floor((start + end) / 2);
+            if (mid == start || mid == end) {
+                return arr[mid];
+            }
+            const comp = c(arr[mid]);
+            if (comp == 0) {
+                return arr[mid];
+            }
+            if (comp < 0) {
+                return search(start, mid);
+            }
+            return search(mid, end);
+        };
+        return search(0, arr.length - 1);
+    }
+    function init() {
+        const toc = getAffixToc();
+        const affixEl = document.querySelector("aside.affix > div > .affix-toc");
+        if (!affixEl) {
+            return;
+        }
+        if (toc.items.length == 0) {
+            return;
+        }
+        const headers = [];
+        const tocAffixPrefix = "toc-affix-";
+        const makeList = (node, level = 0) => {
+            if (node.items.length == 0) {
+                return "";
+            }
+            if (0 < level && level < 3) {
+                const sublist = (n) => n.items.length > 0 && level < 2;
+                const renderItem = (n) => {
+                    var _a, _b, _c, _d, _e, _f;
+                    if (n.el) {
+                        headers.push(n.el);
+                    }
+                    return sublist(n) ? `
+                    <details>
+                        <summary>
+                            <a id="${tocAffixPrefix}${(_a = n.el) === null || _a === void 0 ? void 0 : _a.id}" href="#${(_b = n.el) === null || _b === void 0 ? void 0 : _b.id}">${sanitize((_c = n.el) === null || _c === void 0 ? void 0 : _c.textContent)}</a>
+                        </summary>
+                        <ul>
+                            ${makeList(n, level + 1)}
+                        </ul>
+                    </details>
+                ` : `<a id="${tocAffixPrefix}${(_d = n.el) === null || _d === void 0 ? void 0 : _d.id}" href="#${(_e = n.el) === null || _e === void 0 ? void 0 : _e.id}">${sanitize((_f = n.el) === null || _f === void 0 ? void 0 : _f.textContent)}</a>`;
+                };
+                return node.items.map(n => `<li>${renderItem(n)}</li>`).join("");
+            }
+            else {
+                return node.items.map(n => makeList(n, level + 1)).join("");
+            }
+        };
+        const res = makeList(toc);
+        if (res.trim().length == 0) {
+            return;
+        }
+        affixEl.innerHTML = `
+            <h1>Contents</h1>
+            <ul class="affixTocList">${res}</ul>
+        `;
+        let currentSelectedItem = undefined;
+        const selectCurrentAffixTocItem = () => {
+            let current = binarySearch(headers, e => {
+                const EPS = 0.5;
+                const y = e.getBoundingClientRect().y;
+                if (y < EPS) {
+                    return 1;
+                }
+                if (y > EPS) {
+                    return -1;
+                }
+                return 0;
+            });
+            if (!current) {
+                return;
+            }
+            if (current == headers[0] && current.getBoundingClientRect().y > 0) {
+                current = undefined;
+            }
+            if (current == currentSelectedItem) {
+                return;
+            }
+            const applyCurrent = (applyDetails, applyAnchor) => {
+                if (!currentSelectedItem) {
+                    return;
+                }
+                const a = (n) => {
+                    if (n == affixEl) {
+                        return;
+                    }
+                    if (n instanceof HTMLDetailsElement) {
+                        applyDetails(n);
+                    }
+                    if (n instanceof HTMLAnchorElement) {
+                        applyAnchor(n);
+                    }
+                    if (n.parentElement) {
+                        a(n.parentElement);
+                    }
+                };
+                const tocItem = document.querySelector(`aside.affix a#${tocAffixPrefix}${currentSelectedItem.id}`);
+                if (tocItem) {
+                    a(tocItem);
+                }
+            };
+            const applyOnFirstList = (n, apply) => {
+                if (n instanceof HTMLLIElement) {
+                    apply(n);
+                }
+                else if (n.parentElement) {
+                    applyOnFirstList(n.parentElement, apply);
+                }
+            };
+            applyCurrent(n => n.removeAttribute("open"), n => applyOnFirstList(n, p => p.classList.remove("active")));
+            currentSelectedItem = current;
+            applyCurrent(n => n.setAttribute("open", "open"), n => applyOnFirstList(n, p => p.classList.add("active")));
+        };
+        selectCurrentAffixTocItem();
+        let resizeStatus = ResizeStatus.None;
+        const handleResize = () => {
+            const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+            if (vw < 1280 && (resizeStatus == ResizeStatus.None || resizeStatus == ResizeStatus.Large)) {
+                document.removeEventListener("scroll", selectCurrentAffixTocItem);
+                resizeStatus = ResizeStatus.Small;
+            }
+            else if (vw >= 1280 && (resizeStatus == ResizeStatus.None || resizeStatus == ResizeStatus.Small)) {
+                document.addEventListener("scroll", selectCurrentAffixTocItem);
+                resizeStatus = ResizeStatus.Large;
+            }
+        };
+        handleResize();
+        window.addEventListener("resize", handleResize);
+    }
+    Affix.init = init;
+})(Affix || (Affix = {}));
+var Theme;
+(function (Theme) {
+    function init() {
+        const themeSwitch = document.querySelector("#theme-switch");
+        if (!themeSwitch) {
+            return;
+        }
+        themeSwitch.addEventListener("click", e => {
+            e.preventDefault();
+            const html = document.documentElement;
+            const isDark = html.classList.contains("dark");
+            if (isDark) {
+                html.classList.remove("dark");
+                localStorage.theme = "light";
+                setScrollbarTheme("light");
+            }
+            else {
+                html.classList.add("dark");
+                localStorage.theme = "dark";
+                setScrollbarTheme("dark");
+            }
+        });
+    }
+    Theme.init = init;
+})(Theme || (Theme = {}));
+var TabGroup;
+(function (TabGroup) {
+    const tabGroups = [];
+    function init() {
+        var _a;
+        const tabGroupEls = document.querySelectorAll(".tabGroup");
+        for (const tabGroup of tabGroupEls) {
+            const tabLinks = [...tabGroup.querySelectorAll("ul[role='tablist'] a")];
+            const tabs = tabLinks.map(a => [a, document.getElementById(a.getAttribute("href").substring(1))]);
+            tabLinks.forEach(a => a.addEventListener("click", e => {
+                e.preventDefault();
+                const bb1 = a.getBoundingClientRect();
+                selectTab(a.dataset.tab);
+                const bb2 = a.getBoundingClientRect();
+                window.scrollBy(0, bb2.top - bb1.top);
+            }));
+            tabGroups.push(tabs);
+        }
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedTabs = new Set((_a = urlParams.get("tabs")) === null || _a === void 0 ? void 0 : _a.split(","));
+        for (const selectedTab of selectedTabs) {
+            selectTab(selectedTab, false);
+        }
+    }
+    TabGroup.init = init;
+    function selectTab(tabName, update = true) {
+        const selectedTabs = new Set();
+        selectedTabs.add(tabName);
+        for (const tabGroup of tabGroups) {
+            const tabNames = tabGroup.map(([a, _]) => a.dataset.tab);
+            const selectedTabIndex = tabNames.findIndex(t => tabName == t);
+            if (selectedTabIndex < 0) {
+                const selectedTab = tabGroup.find(([_, select]) => !select.hidden);
+                if (selectedTab && selectedTab[0].dataset.tab) {
+                    selectedTabs.add(selectedTab[0].dataset.tab);
+                }
+                continue;
+            }
+            for (const [i, [a, select]] of tabGroup.entries()) {
+                select.hidden = i != selectedTabIndex;
+                select.setAttribute("aria-hidden", (i != selectedTabIndex).toString());
+                a.setAttribute("aria-selected", (i == selectedTabIndex).toString());
+                a.setAttribute("tabindex", i == selectedTabIndex ? "0" : "-1");
+            }
+        }
+        if (update) {
+            const searchParams = new URLSearchParams(window.location.search);
+            searchParams.set("tabs", [...selectedTabs].join(","));
+            history.pushState(null, "", `${window.location.pathname}?${searchParams.toString()}`);
+        }
+    }
+})(TabGroup || (TabGroup = {}));
+var TOC;
+(function (TOC) {
+    function init() {
+        const tocMenuButton = document.querySelector(".toc-menu-button");
+        const tocItems = document.querySelector(".toc-items");
+        if (!tocMenuButton || !tocItems) {
+            return;
+        }
+        tocMenuButton.addEventListener("click", () => {
+            if (tocItems.classList.contains("open")) {
+                tocItems.classList.remove("open");
+            }
+            else {
+                tocItems.classList.add("open");
+            }
+        });
+    }
+    TOC.init = init;
+})(TOC || (TOC = {}));
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var Versioning;
+(function (Versioning) {
+    function compareVersions(a, b) {
+        const pad = (v) => {
+            if (v.length < 3) {
+                const to = 3 - v.length;
+                for (let i = 0; i < to; i++) {
+                    v.push(0);
+                }
+            }
+            return v;
+        };
+        const verA = pad(a.split(".").map(v => Number.parseInt(v)));
+        const verB = pad(b.split(".").map(v => Number.parseInt(v)));
+        for (let i = 0; i < 3; i++) {
+            const va = verA[i];
+            const vb = verB[i];
+            if (va < vb) {
+                return 1;
+            }
+        }
+        return -1;
+    }
+    function init() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let data;
+            try {
+                const result = yield fetch("/versions.json");
+                data = (yield result.json());
+            }
+            catch (e) {
+                return;
+            }
+            const versionPickerDiv = document.getElementById("version-picker");
+            if (!versionPickerDiv) {
+                return;
+            }
+            const selectEl = document.createElement("select");
+            data.versions = data.versions.sort((a, b) => {
+                if (a.tag == "master") {
+                    return -1;
+                }
+                if (b.tag == "master") {
+                    return 1;
+                }
+                return compareVersions(a.version, b.version);
+            });
+            for (const ver of data.versions) {
+                const verOpt = document.createElement("option");
+                verOpt.value = ver.tag;
+                verOpt.textContent = ver.version + (ver.tag == data.latestTag ? " (latest)" : "");
+                selectEl.appendChild(verOpt);
+                if (ver.tag == "master") {
+                    const divider = document.createElement("option");
+                    divider.disabled = true;
+                    divider.textContent = "──────────";
+                    selectEl.appendChild(divider);
+                }
+            }
+            selectEl.value = docsVersion;
+            versionPickerDiv.appendChild(selectEl);
+            selectEl.addEventListener("change", () => {
+                const tag = selectEl.value;
+                window.location.href = `/${tag}`;
+            });
+            const messages = document.getElementById("global-messages");
+            if (!messages) {
+                return;
+            }
+            if (docsVersion == "master") {
+                const msgDiv = document.createElement("div");
+                msgDiv.classList.add("message");
+                msgDiv.innerHTML = `<span>You are viewing documentation for a yet unreleased BepInEx version.</span> <a href="/">View latest stable docs (${data.latestTag}).</a>`;
+                msgDiv.style.backgroundColor = "#CA8423";
+                messages.appendChild(msgDiv);
+            }
+            else if (docsVersion != data.latestTag) {
+                const msgDiv = document.createElement("div");
+                msgDiv.classList.add("message");
+                msgDiv.innerHTML = `<span>You are viewing old documentation.</span> <a href="/">View latest stable docs (${data.latestTag}).</a>`;
+                msgDiv.style.backgroundColor = "#CA3423";
+                messages.appendChild(msgDiv);
+            }
+        });
+    }
+    Versioning.init = init;
+})(Versioning || (Versioning = {}));
+var MainMenu;
+(function (MainMenu) {
+    function init() {
+        let menuButton = document.getElementById("menu-switch");
+        let nav = document.querySelector("header > nav");
+        if (!menuButton) {
+            return;
+        }
+        menuButton.addEventListener("click", e => {
+            e.preventDefault();
+            if (!nav) {
+                return;
+            }
+            if (nav.classList.contains("open")) {
+                nav.classList.remove("open");
+            }
+            else {
+                nav.classList.add("open");
+            }
+        });
+    }
+    MainMenu.init = init;
+})(MainMenu || (MainMenu = {}));
+/// <reference path="affix.ts" />
+/// <reference path="theme.ts" />
+/// <reference path="tabGroup.ts" />
+/// <reference path="toc.ts" />
+/// <reference path="versioning.ts" />
+/// <reference path="mainMenu.ts" />
+function main() {
+    hljs.initHighlighting();
+    Versioning.init();
+    Theme.init();
+    Affix.init();
+    TabGroup.init();
+    TOC.init();
+    MainMenu.init();
+}
+main();

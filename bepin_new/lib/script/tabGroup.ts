@@ -11,7 +11,10 @@ namespace TabGroup {
 
             tabLinks.forEach(a => a.addEventListener("click", e => {
                 e.preventDefault();
+                const bb1 = a.getBoundingClientRect();
                 selectTab(a.dataset.tab!);
+                const bb2 = a.getBoundingClientRect();
+                window.scrollBy(0, bb2.top - bb1.top);
             }));
 
             tabGroups.push(tabs);
