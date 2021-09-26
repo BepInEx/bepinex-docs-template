@@ -4,7 +4,7 @@ main div {
     &.WARNING,
     &.IMPORTANT,
     &.CAUTION {
-        @apply bg-gray-100 pl-10 pr-3 py-3 border-l-8 border-solid;
+        @apply bg-gray-100 pl-10 pr-3 py-3 border-l-8 border-solid my-3;
         border-left-color: var(--alert-color);
         & > h5 {
             @apply font-semibold uppercase text-lg;
