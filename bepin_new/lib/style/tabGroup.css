@@ -22,12 +22,8 @@ main .tabGroup {
                 @apply no-underline px-3 pb-1 border-b-2 border-solid;
                 color: var(--link-color);
                 border-color: var(--unselected-color);
-                
-                &[tabindex="0"] {
-                    border-color: var(--selected-color);
-                }
 
-                &:hover {
+                &:hover, &[tabindex="0"] {
                     color: var(--selected-color);
                     border-color: var(--selected-color);
                 }
